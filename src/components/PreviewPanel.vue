@@ -44,6 +44,10 @@ watch(() => props.generateID, () => {
     isGenerating.value = false;
   };
 });
+
+function copyImage() {
+
+}
 </script>
 
 <template>
@@ -56,6 +60,10 @@ watch(() => props.generateID, () => {
     </div>
     <div v-if="previewUrl" class="result-container">
       <img :src="previewUrl" alt="预览图" class="result-img"/>
+      <div class="actions">
+        <button @click="copyImage" class="btn">复制</button>
+        <a :href="previewUrl" download="result.png" class="btn">下载</a>
+      </div>
     </div>
   </div>
 </template>
@@ -68,8 +76,37 @@ watch(() => props.generateID, () => {
   height: 100%;
 }
 
+.result-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .result-img {
   max-width: 100%;
   max-height: 400px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn {
+  font-family: inherit;
+  padding: 8px 20px;
+  background: #ff6b35;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #e85a2a;
 }
 </style>
