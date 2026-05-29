@@ -1,0 +1,12 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
