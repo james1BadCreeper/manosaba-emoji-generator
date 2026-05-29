@@ -31,7 +31,7 @@ watch(() => props.generateID, () => {
     ctx.font = 'bold 64px "PingFang SC", "Microsoft YaHei", sans-serif';
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 12;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
 
@@ -45,8 +45,20 @@ watch(() => props.generateID, () => {
   };
 });
 
-function copyImage() {
+async function copyImage() {
+  if (!previewUrl.value) return;
 
+  try {
+    const response = await fetch(previewUrl.value);
+    const blob = await response.blob();
+    await navigator.clipboard.write([
+      new ClipboardItem({ 'image/png': blob })
+    ]);
+    alert('已复制到剪贴板！');
+  } catch (err) {
+    console.error('复制失败:', err);
+    alert('复制失败，请检查浏览器权限');
+  }
 }
 </script>
 
