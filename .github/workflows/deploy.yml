@@ -32,5 +32,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist # Vite 默认打包输出的文件夹是 dist
+          cname: manosaba.iznomia.com # 自动配置 CNAME 记录
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
