@@ -20,6 +20,7 @@ function selectEmoji(emoji: Emoji) {
 const emit = defineEmits<{
   'update:text': [string]
   'update:image': [string | null]
+  'update:imageType': [string]
   'generate': []
 }>();
 
@@ -30,6 +31,10 @@ watch(inputText, (newVal) => {
 
 watch(selectedEmoji, (newEmoji) => {
   emit('update:image', newEmoji?.src ?? null);
+}, { immediate: true });
+
+watch(activeCategoryId, (newCategoryId) => {
+  emit('update:imageType', newCategoryId);
 }, { immediate: true });
 </script>
 

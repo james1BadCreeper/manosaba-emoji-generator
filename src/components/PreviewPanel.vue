@@ -4,6 +4,7 @@ import { ref, watch } from 'vue';
 const props = defineProps<{
   text: string
   image: string | null
+  imageType: string
   generateID: number
 }>();
 
