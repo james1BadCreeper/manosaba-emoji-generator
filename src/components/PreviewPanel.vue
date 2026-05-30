@@ -57,7 +57,7 @@ async function copyImage() {
     alert('已复制到剪贴板！');
   } catch (err) {
     console.error('复制失败:', err);
-    alert('复制失败，请检查浏览器权限');
+    alert('复制失败，请检查浏览器权限或使用下载');
   }
 }
 </script>
