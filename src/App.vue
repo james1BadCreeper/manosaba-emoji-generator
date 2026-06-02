@@ -84,6 +84,7 @@ function sendGenerateRequest() {
   display: flex;
   flex-direction: column;
   background: #0c1113;
+  min-height: 100vh;
   padding: 60px 64px;
 }
 

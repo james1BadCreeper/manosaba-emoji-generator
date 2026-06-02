@@ -1,10 +1,18 @@
 html {
   scrollbar-gutter: stable;
+  min-height: 100%;
+  background: #0c1113;
 }
 
 body {
   font-family: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0;
+  min-height: 100vh;
+  background: #0c1113;
+}
+
+#app {
+  min-height: 100vh;
 }
 
 *, *::before, *::after {
