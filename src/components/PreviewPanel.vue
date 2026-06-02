@@ -12,7 +12,7 @@ const previewUrl = ref<string>('');
 const isGenerating = ref<boolean>(false);
 
 watch(() => props.generateID, () => {
-  if (props.image === null) {
+  if (props.image === null || props.text === '') {
     previewUrl.value = '';
     return;
   }

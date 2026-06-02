@@ -83,7 +83,6 @@ function sendGenerateRequest() {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background: #0c1113;
   padding: 60px 64px;
 }
@@ -171,5 +170,35 @@ function sendGenerateRequest() {
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    padding: 20px 16px;
+  }
+
+  .app-header {
+    padding: 8px 0 16px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .app-body {
+    flex-direction: column;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .card {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .app-footer {
+    padding: 16px 0 0;
+    text-align: center;
+  }
 }
 </style>
