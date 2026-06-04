@@ -1,20 +1,33 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { emojiCategories } from '@/data/emojis';
+import { getLocalizedEmojiCategories } from '@/i18n';
 
 const activeCategoryId = ref<string>(emojiCategories[0]?.id ?? '');
 
 import type { Emoji } from '@/data/emojis';
 
+
+const { t, locale } = useI18n()
+
+const ui = computed(() => ({ selectPlaceholder: t('selectPlaceholder'), generateButton: t('generateButton') }))
+
+const localizedCategories = computed(() => getLocalizedEmojiCategories(locale.value as any));
+
 const currentEmojis = computed(() => {
-  const category = emojiCategories.find(cat => cat.id === activeCategoryId.value);
+  const category = localizedCategories.value.find(cat => cat.id === activeCategoryId.value);
   return category?.list ?? [];
 })
 
-const selectedEmoji = ref<Emoji | null>(emojiCategories[0]?.list[0] ?? null);
+const selectedEmojiId = ref<string>(emojiCategories[0]?.list[0]?.id ?? '');
+
+const selectedEmoji = computed<Emoji | null>(() => {
+  return currentEmojis.value.find(emoji => emoji.id === selectedEmojiId.value) ?? null;
+})
 
 function selectEmoji(emoji: Emoji) {
-  selectedEmoji.value = emoji;
+  selectedEmojiId.value = emoji.id;
 }
 
 const emit = defineEmits<{
@@ -33,6 +46,12 @@ watch(selectedEmoji, (newEmoji) => {
   emit('update:image', newEmoji?.src ?? null);
 }, { immediate: true });
 
+watch(currentEmojis, (emojis) => {
+  if (!emojis.some(emoji => emoji.id === selectedEmojiId.value)) {
+    selectedEmojiId.value = emojis[0]?.id ?? '';
+  }
+}, { immediate: true });
+
 watch(activeCategoryId, (newCategoryId) => {
   emit('update:imageType', newCategoryId);
 }, { immediate: true });
@@ -42,10 +61,10 @@ watch(activeCategoryId, (newCategoryId) => {
   <div class="select-panel">
     <div class="category-tabs">
       <button
-        v-for="category in emojiCategories"
+        v-for="category in localizedCategories"
         :key="category.id"
         :class="['tab', { active: category.id === activeCategoryId }]"
-        @click="activeCategoryId = category.id; selectedEmoji = currentEmojis[0] || null"
+        @click="activeCategoryId = category.id; selectedEmojiId = category.list[0]?.id ?? ''"
       >
         {{ category.label }}
       </button>
@@ -71,7 +90,7 @@ watch(activeCategoryId, (newCategoryId) => {
     </div>
 
     <div class="input-area-container">
-      <input class="input-area" v-model="inputText" type="text" placeholder="在这里输入文字，不支持换行" />
+      <input class="input-area" v-model="inputText" type="text" :placeholder="ui.selectPlaceholder" />
     </div>
 
     <div class="generate-container">
@@ -79,7 +98,7 @@ watch(activeCategoryId, (newCategoryId) => {
         class="generate-btn"
         @click="emit('generate')"
       >
-        生成表情包
+        {{ ui.generateButton }}
       </button>
     </div>
   </div>

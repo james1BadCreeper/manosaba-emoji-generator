@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "vue": "^3.5.32"
+    ,"vue-i18n": "^9.3.0"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",

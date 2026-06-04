@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   text: string
@@ -10,6 +11,7 @@ const props = defineProps<{
 
 const previewUrl = ref<string>('');
 const isGenerating = ref<boolean>(false);
+const { t } = useI18n();
 
 watch(() => props.generateID, () => {
   if (props.image === null || props.text === '') {
@@ -55,10 +57,10 @@ async function copyImage() {
     await navigator.clipboard.write([
       new ClipboardItem({ 'image/png': blob })
     ]);
-    alert('已复制到剪贴板！');
+    alert(t('copiedMessage'));
   } catch (err) {
     console.error('复制失败:', err);
-    alert('复制失败，请检查浏览器权限或使用下载');
+    alert(t('copyFailedMessage'));
   }
 }
 </script>
@@ -66,16 +68,16 @@ async function copyImage() {
 <template>
   <div class="preview-panel">
     <div v-if="!previewUrl && !isGenerating" class="placeholder">
-      点击左侧「生成表情包」查看效果
+      {{ t('previewPlaceholder') }}
     </div>
     <div v-if="isGenerating" class="placeholder">
-      生成中...
+      {{ t('generating') }}
     </div>
     <div v-if="previewUrl" class="result-container">
-      <img :src="previewUrl" alt="预览图" class="result-img"/>
+      <img :src="previewUrl" alt="Preview image" class="result-img"/>
       <div class="actions">
-        <button @click="copyImage" class="btn">复制</button>
-        <a :href="previewUrl" download="result.png" class="btn">下载</a>
+        <button @click="copyImage" class="btn">{{ t('copyButton') }}</button>
+        <a :href="previewUrl" download="result.png" class="btn">{{ t('downloadButton') }}</a>
       </div>
     </div>
   </div>

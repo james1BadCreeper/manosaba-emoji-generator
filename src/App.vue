@@ -1,7 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import SelectPanel from './components/SelectPanel.vue';
 import PreviewPanel from './components/PreviewPanel.vue';
+import { localeLabels, localePath, setLocale, supportedLocales } from './i18n';
+
+const { t, locale } = useI18n()
+
+const ui = computed(() => ({
+  titleMain: t('titleMain'),
+  titleSub: t('titleSub'),
+  logoAlt: t('logoAlt'),
+}))
+
+const localeOptions = supportedLocales.map((code) => ({ code, label: localeLabels[code] }));
+
+const logoSrc = `${import.meta.env.BASE_URL}logo.webp`;
 
 const inputText = ref('');
 const selectedImage = ref<string | null>('');
@@ -24,11 +39,25 @@ function sendGenerateRequest() {
 
 <template>
   <div class="app-container">
+    <div class="app-lang-row">
+      <nav class="locale-switcher" aria-label="Language switcher">
+        <a
+          v-for="option in localeOptions"
+          :key="option.code"
+          :href="localePath(option.code)"
+          :class="['locale-link', { active: option.code === locale }]"
+          @click.prevent="setLocale(option.code)"
+        >
+          {{ option.label }}
+        </a>
+      </nav>
+    </div>
+
     <header class="app-header">
-      <img src="/logo.webp" alt="魔法少女的魔女审判" class="logo" height="70px" />
+      <img :src="logoSrc" :alt="ui.logoAlt" class="logo" height="70px" />
       <h1 class="title">
-        <span class="title-part title-main">表情包</span>
-        <span class="title-part title-sub">生成器</span>
+        <span class="title-part title-main">{{ ui.titleMain }}</span>
+        <span class="title-part title-sub">{{ ui.titleSub }}</span>
       </h1>
     </header>
 
@@ -53,26 +82,23 @@ function sendGenerateRequest() {
     <footer class="app-footer">
       <div class="footer-links">
         <span>
-          © 原作 <a href="https://manosaba.com" target="_blank" rel="noopener">魔法少女ノ魔女裁判</a>
+          {{ t('originalWorkPrefix') }} <a href="https://manosaba.com" target="_blank" rel="noopener">魔法少女ノ魔女裁判</a>
           Re,AER LLC./Acacia
         </span>
         <a href="https://manosaba.com/guideline" target="_blank" rel="noopener">
-          二次創作ガイドライン
+          {{ t('guidelineLink') }}
         </a>
       </div>
 
       <div class="footer-info">
-        <!-- 你的版权 -->
-        <span>© 2026 魔法少女ノ魔女裁判 表情包生成器（非官方）By james1BadCreeper</span>
+        <span>{{ t('copyrightText') }}</span>
         <p> | </p>
-        <!-- GitHub 仓库 -->
-        <a href="https://github.com/james1BadCreeper/magosaba-emoji-generator" target="_blank" rel="noopener">
-          GitHub
+        <a href="https://github.com/james1BadCreeper/manosaba-emoji-generator" target="_blank" rel="noopener">
+          {{ t('githubLink') }}
         </a>
         <p> | </p>
-        <!-- 你的博客 -->
         <a href="https://iznomia.com" target="_blank" rel="noopener">
-          iznomia
+          {{ t('blogLink') }}
         </a>
       </div>
     </footer>
@@ -86,6 +112,41 @@ function sendGenerateRequest() {
   background: #0c1113;
   min-height: 100vh;
   padding: 60px 64px;
+}
+
+.app-lang-row {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto 12px;
+}
+
+.locale-switcher {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.locale-link {
+  color: rgba(255, 255, 255, 0.68);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: all 0.2s ease;
+}
+
+.locale-link:hover {
+  color: #fff;
+  border-color: rgba(255, 138, 80, 0.55);
+}
+
+.locale-link.active {
+  color: #fff;
+  background: #ff6b35;
+  border-color: #ff6b35;
 }
 
 /* ==== 标题栏 ==== */
