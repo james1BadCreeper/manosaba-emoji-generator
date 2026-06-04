@@ -17,7 +17,7 @@ const messages = {
   'zh-cn': {
     documentTitle: '表情包生成器',
     titleMain: '表情包',
-    titleSub: '生成器',
+    titleSub: '生成器（非官方）',
     logoAlt: '魔法少女的魔女审判',
     selectPlaceholder: '在这里输入文字，不支持换行',
     generateButton: '生成表情包',
@@ -59,7 +59,7 @@ const messages = {
   en: {
     documentTitle: 'Emoji Generator',
     titleMain: 'Emoji',
-    titleSub: 'Generator',
+    titleSub: ' Generator (Unofficial)',
     logoAlt: 'The Magical Girl and the Witch’s Trial',
     selectPlaceholder: 'Type your text here. Line breaks are not supported.',
     generateButton: 'Generate Emoji',
@@ -101,7 +101,7 @@ const messages = {
   ja: {
     documentTitle: '絵文字ジェネレーター',
     titleMain: '絵文字',
-    titleSub: 'ジェネレーター',
+    titleSub: 'ジェネレーター（非公式）',
     logoAlt: '魔法少女ノ魔女裁判',
     selectPlaceholder: 'ここに文字を入力してください。改行はできません。',
     generateButton: '絵文字を生成',
