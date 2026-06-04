@@ -85,7 +85,7 @@ function sendGenerateRequest() {
           {{ t('originalWorkPrefix') }} <a href="https://manosaba.com" target="_blank" rel="noopener">魔法少女ノ魔女裁判</a>
           Re,AER LLC./Acacia
         </span>
-        <a href="https://manosaba.com/guideline" target="_blank" rel="noopener">
+        <a href="https://manosaba.com/guidelines" target="_blank" rel="noopener">
           {{ t('guidelineLink') }}
         </a>
       </div>
