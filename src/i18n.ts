@@ -15,7 +15,7 @@ const defaultLocale: Locale = 'zh-cn'
 
 const messages = {
   'zh-cn': {
-    documentTitle: '表情包生成器',
+    documentTitle: '魔法少女的魔女审判表情包生成器',
     titleMain: '表情包',
     titleSub: '生成器（非官方）',
     logoAlt: '魔法少女的魔女审判',
@@ -57,7 +57,7 @@ const messages = {
     },
   },
   en: {
-    documentTitle: 'Emoji Generator',
+    documentTitle: 'Manosaba Emoji Generator',
     titleMain: 'Emoji',
     titleSub: ' Generator (Unofficial)',
     logoAlt: 'The Magical Girl and the Witch’s Trial',
@@ -99,7 +99,7 @@ const messages = {
     },
   },
   ja: {
-    documentTitle: '絵文字ジェネレーター',
+    documentTitle: '魔法少女ノ魔女裁判 絵文字ジェネレーター',
     titleMain: '絵文字',
     titleSub: 'ジェネレーター（非公式）',
     logoAlt: '魔法少女ノ魔女裁判',
@@ -179,6 +179,14 @@ function syncDocument(locale: Locale) {
 
 export function initLocale() {
   if (typeof window === 'undefined') return
+
+  // Handle GitHub Pages 404 redirect for direct URL access to locale paths
+  const redirectPath = sessionStorage.getItem('redirectPath')
+  if (redirectPath) {
+    sessionStorage.removeItem('redirectPath')
+    window.history.replaceState({}, '', redirectPath)
+  }
+
   const initialLocale = getLocaleFromPath()
   i18n.global.locale.value = initialLocale
   syncDocument(initialLocale)

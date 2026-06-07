@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import SelectPanel from './components/SelectPanel.vue';
@@ -9,10 +9,15 @@ import { localeLabels, localePath, setLocale, supportedLocales } from './i18n';
 const { t, locale } = useI18n()
 
 const ui = computed(() => ({
+  documentTitle: t('documentTitle'),
   titleMain: t('titleMain'),
   titleSub: t('titleSub'),
   logoAlt: t('logoAlt'),
 }))
+
+watchEffect(() => {
+  document.title = ui.value.documentTitle
+})
 
 const localeOptions = supportedLocales.map((code) => ({ code, label: localeLabels[code] }));
 
